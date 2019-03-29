@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/CafeApp/bin/Debug/netcoreapp2.1
+/CafeApp/obj
