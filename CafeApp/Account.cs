@@ -4,6 +4,13 @@ using System.Text;
 
 namespace CafeApp
 {
+    enum PaymentMethod
+    {
+        DebitCard,
+        CreditCard,
+        Paypal,
+        GooglePay
+    }
     /// <summary>
     /// Cafe application account for customers.
     /// Customers can add money and make payments using the application.
@@ -27,7 +34,7 @@ namespace CafeApp
         /// <summary>
         /// Customer can choose the payment option
         /// </summary>
-        public string PaymentMethod { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
         /// <summary>
         /// Account created date
         /// </summary>
