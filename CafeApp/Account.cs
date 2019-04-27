@@ -17,10 +17,6 @@ namespace CafeApp
     /// </summary>
     class Account
     {
-        #region statics
-        private static int lastMembershipNumber = 0;
-        #endregion
-
         #region Properties
         /// <summary>
         /// Unique number for the customer
@@ -46,8 +42,6 @@ namespace CafeApp
         {
             //lastMembershipNumber++;
             //MembershipNumber = lastMembershipNumber;
-
-            MembershipNumber = ++lastMembershipNumber;
             MemberSince = DateTime.Now;
         }
 

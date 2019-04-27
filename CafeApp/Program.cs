@@ -16,7 +16,8 @@ namespace CafeApp
                 Console.WriteLine("1. Create an account");
                 Console.WriteLine("2. Add Money");
                 Console.WriteLine("3. Pay");
-                Console.WriteLine("4. View all my accounts");
+                Console.WriteLine("4. View my accounts");
+                Console.WriteLine("5. Transaction history");
                 Console.Write("Select an option: ");
                 var option = Console.ReadLine();
                 switch (option)
@@ -101,15 +102,32 @@ namespace CafeApp
                     case "4":
                         ViewAllAccounts();
                         break;
+                    case "5":
+                        ViewAllTransactions();
+                        break;
                     default:
                         break;
                 }
             }
         }
 
+        private static void ViewAllTransactions()
+        {
+            ViewAllAccounts();
+            Console.Write("Membership Number: ");
+            var membershipNumber = Convert.ToInt32(Console.ReadLine());
+            var transactions = Cafe.GetTransactionsForMembershipNumber(membershipNumber);
+            foreach (var transaction in transactions)
+            {
+                Console.WriteLine($"Id: {transaction.TransactionId}, Date: {transaction.TransactionDate}, Type: {transaction.TransactionType}, Amount: {transaction.Amount}");
+            }
+        }
+
         private static void ViewAllAccounts()
         {
-            var accounts = Cafe.GetAllAccountsForUser();
+            Console.Write("Email Address: ");
+            var emailAddress = Console.ReadLine();
+            var accounts = Cafe.GetAllAccountsForUser(emailAddress);
             foreach (var account in accounts)
             {
                 Console.WriteLine($"Membership Number: {account.MembershipNumber}, Member Since: {account.MemberSince}, Balance: {account.Balance:C}, Email Address: {account.EmailAddress}, Payment Method: {account.PaymentMethod}");

@@ -7,8 +7,7 @@ namespace CafeApp
 {
     static class Cafe
     {
-        private static List<Account> accounts = new List<Account>();
-        private static List<Transaction> transactions = new List<Transaction>();
+        private static CafeContext db = new CafeContext();
 
         /// <summary>
         /// Creates account for the cafe application
@@ -36,18 +35,26 @@ namespace CafeApp
                 a1.AddMoney(initialMoneyAdded);
             }
 
-            accounts.Add(a1);
+            db.Accounts.Add(a1);
+            db.SaveChanges();
             return a1;
         }
 
-        public static IEnumerable<Account> GetAllAccountsForUser()
+        public static IEnumerable<Account> GetAllAccountsForUser(string emailAddress)
         {
-            return accounts;
+            return db.Accounts.Where(a => a.EmailAddress == emailAddress);
+        }
+
+        public static IEnumerable<Transaction> GetTransactionsForMembershipNumber(int membershipNumber)
+        {
+            return db.Transactions
+                .Where(t => t.MembershipNumber == membershipNumber)
+                .OrderByDescending(t => t.TransactionDate);
         }
 
         private static Account GetAccountByMembershipNumber(int membershipNumber)
         {
-            var account = accounts.SingleOrDefault(a => a.MembershipNumber == membershipNumber);
+            var account = db.Accounts.SingleOrDefault(a => a.MembershipNumber == membershipNumber);
 
             if (account == null)
             {
@@ -70,7 +77,8 @@ namespace CafeApp
                 MembershipNumber = membershipNumber
             };
 
-            transactions.Add(transaction);
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
 
         public static void Pay(int membershipNumber, decimal amount)
@@ -90,7 +98,8 @@ namespace CafeApp
                 MembershipNumber = membershipNumber
             };
 
-            transactions.Add(transaction);
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
     }
 }
